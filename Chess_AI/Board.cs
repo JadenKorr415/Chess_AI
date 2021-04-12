@@ -118,5 +118,41 @@ namespace Chess_AI
 			//TODO: Castling implementation
 			return moves;
 		}
+
+		public List<Tuple<int, int>> GetKnightMoves(Tuple<int, int> position, int color)
+		{
+			List<Tuple<int, int>> moves = new List<Tuple<int, int>>();
+
+			//TODO: stub
+
+			return moves;
+		}
+
+		public List<Tuple<int, int>> GetCBishopMoves(Tuple<int, int> position, int color)
+		{
+			List<Tuple<int, int>> moves = new List<Tuple<int, int>>();
+
+			//TODO: stub
+
+			return moves;
+		}
+
+		public List<Tuple<int, int>> GetQueenMoves(Tuple<int, int> position, int color)
+		{
+			List<Tuple<int, int>> moves = new List<Tuple<int, int>>();
+
+			//TODO: stub
+
+			return moves;
+		}
+
+		public List<Tuple<int, int>> GetKingMoves(Tuple<int, int> position, int color)
+		{
+			List<Tuple<int, int>> moves = new List<Tuple<int, int>>();
+
+			//TODO: stub
+
+			return moves;
+		}
 	}
 }
