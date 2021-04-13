@@ -8,25 +8,33 @@ namespace Chess_AI
 {
 	class Board
 	{
+		// Piece types are represented by numbers 1-6 while color is represented by the number being positive for white and negative for black
 		public const int PAWN_WHITE = 1,  KNIGHT_WHITE = 2,  BISHOP_WHITE = 3,  CASTLE_WHITE = 4,  QUEEN_WHITE = 5,  KING_WHITE = 6;
 		public const int PAWN_BLACK = -1, KNIGHT_BLACK = -2, BISHOP_BLACK = -3, CASTLE_BLACK = -4, QUEEN_BLACK = -5, KING_BLACK = -6;
 
 		/*
-		 * board is set so that first int [] [*] is the column, generally defined by letters A-H on a standard chess board are mapped to values 0-7.
-		 * second int [*][] is the row, generally defined by numbers 1-8 on a standard chess board are mapped to values 0-7
+		 * board is set so that first int [*,] is the column, generally defined by letters A-H on a standard chess board are mapped to values 0-7.
+		 * second int [,*] is the row, generally defined by numbers 1-8 on a standard chess board are mapped to values 0-7
 		 * So on B6 on a standard board would be located at board[1][5] and E2 would be at board[4][1]
 		 * empty spaces are marked as 0 and filled spaces are marked by the above designations; white is positive black is negative
 		 */
 		private int[,] board;
 
+		/* Constructor
+		 * Initializes the board object and resets the board to a clean slate
+		 */
 		public Board()
 		{
 			board = new int[8,8];
 			Reset();
 		}
 
+		/*
+		 * Resets the board for a new game
+		 */
 		public void Reset()
 		{
+			// Setup white main row
 			board[0, 0] = CASTLE_WHITE;
 			board[1, 0] = KNIGHT_WHITE;
 			board[2, 0] = BISHOP_WHITE;
@@ -35,8 +43,9 @@ namespace Chess_AI
 			board[5, 0] = BISHOP_WHITE;
 			board[6, 0] = KNIGHT_WHITE;
 			board[7, 0] = CASTLE_WHITE;
-			for (int i = 0; i < 8; i++) { board[i, 1] = PAWN_WHITE; }
+			for (int i = 0; i < 8; i++) { board[i, 1] = PAWN_WHITE; } // populate white pawns
 
+			// Setup black main row
 			board[0, 7] = CASTLE_BLACK;
 			board[1, 7] = KNIGHT_BLACK;
 			board[2, 7] = BISHOP_BLACK;
@@ -45,11 +54,13 @@ namespace Chess_AI
 			board[5, 7] = BISHOP_BLACK;
 			board[6, 7] = KNIGHT_BLACK;
 			board[7, 7] = CASTLE_BLACK;
-			for (int i = 0; i < 8; i++) { board[i, 6] = PAWN_BLACK; }
+			for (int i = 0; i < 8; i++) { board[i, 6] = PAWN_BLACK; } // populate black pawns
 		}
 		
 
-		
+		/*
+		 * Unchecked and Unsafe method to move a piece on the board
+		 */
 		public void Move(Tuple<int, int> source, Tuple<int, int> destination)
 		{
 			board[destination.Item1, destination.Item2] = board[source.Item1, source.Item2];
