@@ -132,7 +132,84 @@ namespace Chess_AI
 		{
 			List<Tuple<int, int>> moves = new List<Tuple<int, int>>();
 
-			//TODO: stub
+			// bools to see if that direction has reached its end
+			// respectively up right, up left, down right, down left
+			bool[] ends = new bool[] { true, true, true, true };
+			bool[] dir; // U D L R
+
+			for (int i = 1; i < 8; i++)
+			{
+				// checks if the potential move has gone beyond the bounds of the board
+				dir = new bool[4] { position.Item2 + i > 7, position.Item2 - i < 0, position.Item1 - i < 0, position.Item1 + i > 7 };
+				ends[0] = !(!ends[0] || (dir[0] || dir[3]));
+				ends[1] = !(!ends[1] || (dir[0] || dir[2]));
+				ends[2] = !(!ends[2] || (dir[1] || dir[3]));
+				ends[3] = !(!ends[3] || (dir[1] || dir[2]));
+
+
+				//check diagonal up right
+				if (ends[0] && board[position.Item1 + i, position.Item2 + i] == 0) // empty space, valid and continue
+				{ 
+					moves.Add(new Tuple<int, int>(position.Item1 + i, position.Item2 + i)); 
+				} 
+				else if (ends[0] && board[position.Item1 + i, position.Item2 + i] * color < 0) // enemy space, valid move; direction complete
+				{ 
+					moves.Add(new Tuple<int, int>(position.Item1 + i, position.Item2 + i));
+					ends[0] = false;
+				} 
+				else if(ends[0]) // ally space, invalid move; end direction
+				{
+					ends[0] = false;
+				}
+
+				//check diagonal up left
+				if (ends[1] && board[position.Item1 - i, position.Item2 + i] == 0) // empty space, valid and continue
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 - i, position.Item2 + i));
+				}
+				else if (ends[1] && board[position.Item1 - i, position.Item2 + i] * color < 0) // enemy space, valid move; direction complete
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 - i, position.Item2 + i));
+					ends[1] = false;
+				}
+				else if (ends[1]) // ally space, invalid move; end direction
+				{
+					ends[1] = false;
+				}
+
+				//check diagonal down right
+				if (ends[2] && board[position.Item1 + i, position.Item2 - i] == 0) // empty space, valid and continue
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 + i, position.Item2 - i));
+				}
+				else if (ends[2] && board[position.Item1 + i, position.Item2 - i] * color < 0) // enemy space, valid move; direction complete
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 + i, position.Item2 - i));
+					ends[2] = false;
+				}
+				else if (ends[2]) // ally space, invalid move; end direction
+				{
+					ends[2] = false;
+				}
+
+				//check diagonal down left
+				if (ends[3] && board[position.Item1 - i, position.Item2 - i] == 0) // empty space, valid and continue
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 - i, position.Item2 - i));
+				}
+				else if (ends[3] && board[position.Item1 - i, position.Item2 - i] * color < 0) // enemy space, valid move; direction complete
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 - i, position.Item2 - i));
+					ends[3] = false;
+				}
+				else if (ends[3]) // ally space, invalid move; end direction
+				{
+					ends[3] = false;
+				}
+
+				//if all directions are ended then exit
+				if(!(ends[0] && ends[1] && ends[2] && ends[3])) { break; }
+			}
 
 			return moves;
 		}
@@ -153,6 +230,13 @@ namespace Chess_AI
 			//TODO: stub
 
 			return moves;
+		}
+
+		public bool InCheck(Tuple<int,int> position, int color)
+		{
+			//TODO: stub
+
+			return false;
 		}
 	}
 }
