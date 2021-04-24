@@ -102,6 +102,7 @@ namespace Chess_AI
 		public List<Tuple<int,int>> GetCastleMoves(Tuple<int,int> position, int color)
 		{
 			List<Tuple<int, int>> moves = new List<Tuple<int, int>>();
+			/*
 			for(int i = position.Item1 + 1; i <= 7; i++) // check to the right of the castle
 			{
 				if(board[i, position.Item2] == 0) { moves.Add(new Tuple<int, int>(i, position.Item2)); } // empty space, valid and continue
@@ -126,6 +127,70 @@ namespace Chess_AI
 				if (board[position.Item1, i] * color < 0) { moves.Add(new Tuple<int, int>(position.Item1, i)); break; } // enemy space, valid move; exit loop
 				else { break; } // ally space, invalid move; exit
 			}
+			*/
+			bool[] dir = new bool[4] { true, true, true, true }; //up, down, left, right
+			for(int i = 1; i < 8; i++)
+			{
+				// Checking above
+				if (position.Item2 + i < 8 && board[position.Item1, position.Item2 + i] == 0)  // empty space, valid and continue
+				{
+					moves.Add(new Tuple<int, int>(position.Item1, position.Item2 + i));
+				}
+				else
+				{
+					if (position.Item2 + i < 8 && board[position.Item1, position.Item2 + i] * color < 0) // enemy space, valid move; exit loop
+					{
+						moves.Add(new Tuple<int, int>(position.Item1, position.Item2 + i));
+					}
+					dir[0] = false;
+					if (!(dir[1] || dir[2] || dir[3])) { break; } // all directions finished
+				}
+
+				// Checking below
+				if (position.Item2 - i <= 0 && board[position.Item1, position.Item2 - i] == 0)  // empty space, valid and continue
+				{
+					moves.Add(new Tuple<int, int>(position.Item1, position.Item2 - i));
+				}
+				else
+				{
+					if (position.Item2 - i >= 0 && board[position.Item1, position.Item2 - i] * color < 0) // enemy space, valid move; exit loop
+					{
+						moves.Add(new Tuple<int, int>(position.Item1, position.Item2 - i));
+					}
+					dir[1] = false;
+					if (!(dir[0] || dir[2] || dir[3])) { break; } // all directions finished
+				}
+
+				// Checking to the left
+				if (position.Item1 - i >= 0 && board[position.Item1 - i, position.Item2] == 0)  // empty space, valid and continue
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 - i, position.Item2));
+				}
+				else
+				{
+					if (position.Item1 -i >= 0 && board[position.Item1 - i, position.Item2] * color < 0) // enemy space, valid move; exit loop
+					{
+						moves.Add(new Tuple<int, int>(position.Item1 - i, position.Item2));
+					}
+					dir[2] = false;
+					if (!(dir[0] || dir[1] || dir[3])) { break; } // all directions finished
+				}
+
+				// Checking to the right
+				if (position.Item1 + i < 8 && board[position.Item1 + i, position.Item2] == 0)  // empty space, valid and continue
+				{ 
+					moves.Add(new Tuple<int, int>(position.Item1 + i, position.Item2)); 
+				}
+				else {
+					if (position.Item1 + i < 8 && board[position.Item1 + i, position.Item2] * color < 0) // enemy space, valid move; exit loop
+					{
+						moves.Add(new Tuple<int, int>(position.Item1 + i, position.Item2)); 
+					}
+					dir[3] = false;
+					if(!(dir[0] || dir[1] || dir[2])) { break; } // all directions finished
+				} 
+			}
+
 			//TODO: Castling implementation
 			return moves;
 		}
