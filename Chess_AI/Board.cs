@@ -199,7 +199,57 @@ namespace Chess_AI
 		{
 			List<Tuple<int, int>> moves = new List<Tuple<int, int>>();
 
-			//TODO: stub
+			if(position.Item2 + 2 < 8) // checking above positions
+			{
+				if(board[position.Item1 + 1, position.Item2 + 2] == 0 || board[position.Item1 + 1, position.Item2 + 2] * color < 0) // position is either empty or an opponent space
+				{
+					moves.Add(new Tuple<int,int>(position.Item1 + 1, position.Item2 + 2));
+				}
+
+				if (board[position.Item1 - 1, position.Item2 + 2] == 0 || board[position.Item1 - 1, position.Item2 + 2] * color < 0) // position is either empty or an opponent space
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 - 1, position.Item2 + 2));
+				}
+			}
+
+			if (position.Item2 - 2 >= 0) // checking below positions
+			{
+				if (board[position.Item1 + 1, position.Item2 - 2] == 0 || board[position.Item1 + 1, position.Item2 - 2] * color < 0) // position is either empty or an opponent space
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 + 1, position.Item2 - 2));
+				}
+
+				if (board[position.Item1 - 1, position.Item2 - 2] == 0 || board[position.Item1 - 1, position.Item2 - 2] * color < 0) // position is either empty or an opponent space
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 - 1, position.Item2 - 2));
+				}
+			}
+
+			if (position.Item1 - 2 >= 0) // checking left positions
+			{
+				if (board[position.Item1 - 2, position.Item2 + 1] == 0 || board[position.Item1 - 2, position.Item2 + 1] * color < 0) // position is either empty or an opponent space
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 - 2, position.Item2 - 1));
+				}
+
+				if (board[position.Item1 - 2, position.Item2 - 1] == 0 || board[position.Item1 - 2, position.Item2 - 1] * color < 0) // position is either empty or an opponent space
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 - 2, position.Item2 - 1));
+				}
+			}
+
+			if (position.Item1 + 2 < 8) // checking right positions
+			{
+				if (board[position.Item1 + 2, position.Item2 + 1] == 0 || board[position.Item1 + 2, position.Item2 + 1] * color < 0) // position is either empty or an opponent space
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 + 2, position.Item2 + 1));
+				}
+
+				if (board[position.Item1 + 2, position.Item2 - 1] == 0 || board[position.Item1 + 2, position.Item2 - 1] * color < 0) // position is either empty or an opponent space
+				{
+					moves.Add(new Tuple<int, int>(position.Item1 + 2, position.Item2 - 1));
+				}
+			}
 
 			return moves;
 		}
